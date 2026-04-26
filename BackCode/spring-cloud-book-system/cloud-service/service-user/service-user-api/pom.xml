@@ -18,10 +18,18 @@
 
     <dependencies>
         <dependency>
+            <artifactId>service-user-application-service</artifactId>
             <groupId>mfqh.com.cn</groupId>
-            <artifactId>common-db</artifactId>
             <version>1.0.0</version>
         </dependency>
+
+        <!--中介者 注册器、转发器等定义-->
+        <dependency>
+            <artifactId>service-user-infrastructure</artifactId>
+            <groupId>mfqh.com.cn</groupId>
+            <version>1.0.0</version>
+        </dependency>
+
         <dependency>
             <groupId>org.camunda.bpm.springboot</groupId>
             <artifactId>camunda-bpm-spring-boot-starter</artifactId>
@@ -37,6 +45,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- Swagger (SpringDoc) SpringBoot3 专用 -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
         </dependency>
     </dependencies>
 

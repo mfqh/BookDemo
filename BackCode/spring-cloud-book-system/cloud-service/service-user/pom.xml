@@ -11,6 +11,11 @@
 
     <modules>
         <module>service-user-api</module>
+        <module>service-user-application-service</module>
+        <module>service-user-domain</module>
+        <module>service-user-infrastructure</module>
+        <module>service-user-interface</module>
+        <module>service-user-query</module>
     </modules>
 
     <groupId>mfqh.com.cn</groupId>
