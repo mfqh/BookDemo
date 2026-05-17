@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SSO 统一登录</title>
+</head>
+<body>
+<h1>SSO 统一登录</h1>
+<!-- 关键：表单提交地址必须是 /login，method 必须是 post -->
+<form method="post" action="/sso/login">
+    <div>
+        <label>用户名：</label>
+        <input type="text" name="username" required>
+    </div>
+    <div>
+        <label>密码：</label>
+        <input type="password" name="password" required>
+    </div>
+    <button type="submit">登录</button>
+</form>
+</body>
+</html>

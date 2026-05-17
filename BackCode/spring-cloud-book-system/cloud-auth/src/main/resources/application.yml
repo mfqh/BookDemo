@@ -1,0 +1,19 @@
+spring:
+  # redis
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 0
+      password: Zemic#10245275
+
+  # session 存在 redis，实现共享
+  session:
+    store-type: redis
+    timeout: 3600
+
+  # thymeleaf
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
