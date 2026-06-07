@@ -1,9 +1,3 @@
-<template>
-  <div class="loading">
-    <h2>登录中...</h2>
-  </div>
-</template>
-
 <script setup>
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
@@ -22,7 +16,6 @@ onMounted(async () => {
   }
 
   try {
-    // 直接用 Postman 生成的代码
     const data = new URLSearchParams();
     data.append('grant_type', 'authorization_code');
     data.append('code', code);
@@ -40,13 +33,15 @@ onMounted(async () => {
 
     const res = await axios(config);
 
-    console.log('获取token成功:', res.data)
+    // 1. 先执行存 token 的代码，确保一定执行
+    console.log('✅ 获取token成功:', res.data)
     localStorage.setItem('access_token', res.data.access_token)
     localStorage.setItem('refresh_token', res.data.refresh_token)
 
+    // 2. 存完 token 再跳转，这时候组件才卸载
     router.push('/')
   } catch (err) {
-    console.error('获取token失败:', err.response?.data || err)
+    console.error('❌ 获取token失败:', err.response?.data || err)
     alert('登录失败，请重试（错误信息：' + (err.response?.data?.error_description || err.message) + '）')
   }
 })

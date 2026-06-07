@@ -16,6 +16,9 @@ import org.springframework.security.oauth2.server.authorization.client.InMemoryR
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.UUID;
 
@@ -38,7 +41,27 @@ public class SecurityConfig {
         // 启用表单登录（OAuth2 必须）
         http.formLogin(form -> form.permitAll());
 
+        // ✅ 关键：开启CORS配置
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
+
         return http.build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        // 允许你的前端域名
+        config.addAllowedOrigin("http://localhost:10302");
+        // 允许所有请求方法（GET/POST/OPTIONS等）
+        config.addAllowedMethod("*");
+        // 允许所有请求头
+        config.addAllowedHeader("*");
+        // 允许携带凭证
+        config.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 
     // 2. 应用安全过滤器链（登录页配置）
@@ -74,18 +97,15 @@ public class SecurityConfig {
         return new InMemoryRegisteredClientRepository(client);
     }
 
-    // 4. 测试用户（admin / 123456）
     @Bean
     public UserDetailsService userDetailsService() {
-        // 直接创建用户，确保密码编码器匹配
         UserDetails user = User.withUsername("admin")
-                .password("{noop}123456") // 关键：必须加 {noop}，表示明文密码
+                .password("123456")
                 .roles("USER")
                 .build();
         return new InMemoryUserDetailsManager(user);
     }
 
-    // 5. 密码编码器（必须）
     @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
